@@ -9,6 +9,7 @@ main = hspec spec
 spec :: Spec
 spec =  do
   describe "Point2" $ do
+    
     it "dimension is 2" $
       dimension (Point2 (10, 11)) `shouldBe` 2
 
