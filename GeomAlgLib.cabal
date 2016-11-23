@@ -38,9 +38,15 @@ test-suite GeomAlgLib-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , hspec
+                     , QuickCheck
                      , GeomAlgLib
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
+
+
+                     
+
 
 source-repository head
   type:     git

@@ -1,3 +1,4 @@
+{-
 %------------------------------------------------------------------------------
 % Copyright (C) 1997, 1998, 2008 Joern Dinkla, www.dinkla.net
 %------------------------------------------------------------------------------
@@ -8,16 +9,16 @@
 %
 \subsection{Vierdimensionale Punkte (|Point4|)}
 \module{Point4}
+-}
 
-\begin{code}
 module Point4 (module PointClass, module Point4) where
 
 import PointClass
-\end{code}
 
+{-
 Vierdimensionale Punkte \Index{Point4} sind noch als Tupel implementiert.
+-}
 
-\begin{code}
 newtype Num a => Point4 a     = Point4 (a,a,a,a) deriving Eq
 
 type P4	a		      = Point4 a
@@ -52,5 +53,3 @@ instance (Num a, Eq a)        => Num (Point4 a) where
     abs			      = mapP abs
     signum		      = undefined
     fromInteger		      = undefined
-\end{code}
-

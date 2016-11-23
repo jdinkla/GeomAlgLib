@@ -1,5 +1,6 @@
+{-
 %------------------------------------------------------------------------------
-% Copyright (C) 1997, 1998, 2008 Joern Dinkla, www.dinkla.net
+% Copyright (C) 1997, 1998, 2008, 2016 Joern Dinkla, www.dinkla.net
 %------------------------------------------------------------------------------
 %
 % see
@@ -8,8 +9,8 @@
 %
 \subsection{Punkte (|Point|)}
 \module{Point}
+-}
 
-\begin{code}
 module Point (
          module PointClass, module Point1, module Point2, 
          module Point3, module Point4, module PointN, module Point
@@ -21,5 +22,3 @@ import Point2
 import Point3
 import Point4
 import PointN
-\end{code}
-

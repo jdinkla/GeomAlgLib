@@ -10,9 +10,9 @@ a topped domain
 
 module Basics.Topped where
 
-import Prelude hiding (RealFloat (isInfinite))
+import           Prelude hiding (RealFloat (isInfinite))
 
-data Topped a                 = Finite a | Infty 
+data Topped a                 = Finite a | Infty
                                 deriving (Eq, Ord)
 
 instance Show a => Show (Topped a) where
@@ -43,8 +43,8 @@ fromTopped (Finite x)         = x
 fromTopped Infty              = error "Topped.fromTopped Infty"
 
 isInfty, isFinite             :: Topped a -> Bool
-isInfty                       = caseTopped (const False) True 
-isFinite                      = caseTopped (const True) False 
+isInfty                       = caseTopped (const False) True
+isFinite                      = caseTopped (const True) False
 
 {-
 
@@ -67,12 +67,12 @@ instance Enum a => Enum (Topped a) where
    signum                      = map signum
    negate                      = map negate
    fromInteger                 = Topped . fromInteger
- 
+
 
  instance Real a => Real (Topped a) where
      toRational (Topped x)     = toRational x
      toRational Infty		= error "Topped.toRational Infty"
-                               
+
  instance Integral a => Integral (Topped a) where
      quotRem (Topped x) (Topped y) = (Topped a, Topped b) where (a,b) = quotRem x y
      quotRem _ _	        = error "Topped.quotRem Infty"
@@ -88,7 +88,7 @@ instance Enum a => Enum (Topped a) where
      (Topped _) / Infty	= Topped 0
      Infty / (Topped _)	= Infty
      Infty / Infty		= Topped 1
- 
+
  instance Floating a => Floating (Topped a) where
      pi			= Topped pi
      exp			= map exp
