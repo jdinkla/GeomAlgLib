@@ -1,11 +1,11 @@
 # GeomAlgLib
 
-This project containts algorithms and datastructures for some geometric problems.
+This project contains algorithms and datastructures for some geometric problems.
 
 The code was written in 1998 for a 
 [diploma thesis](https://jdinkla.github.io/software-development/1998/10/19/geometric-algorithms-in-haskell.html).
 
-In 2016 it was adapted to build with [stack](https://docs.haskellstack.org).
+Since 2016 [stack](https://docs.haskellstack.org) is used as a build tool.
 
 The library contains:
 
