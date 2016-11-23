@@ -20,6 +20,7 @@ module Polygon (
        )
 where
 
+import Prelude hiding ((<*>))
 import Point	 ( Point ((<==>), (<.>), (<*>)), Point3 )
 import Point2    ( Point2 (..), P2, Point (origin), isOn, isRightTurnOrOn, 
 		   isCollinear, isLeftTurnOrOn, xcoord, ycoord, isOn )
@@ -63,7 +64,7 @@ instance (Eq a, Num a, Point p) => Eq (Polygon p a) where
 \end{code}
 
 
-Die Fläche eines Polygons wird nach Theorem 1.4.3 aus
+Die Flï¿½che eines Polygons wird nach Theorem 1.4.3 aus
 \cite{orourke94:cg} berechnet.
 
 \begin{code}
@@ -117,7 +118,7 @@ deleteCollinear xs	      = xs
 %
 \subsubsection{Extremale Punkte eines konvexen Polygons}
 
-|extreme| ermittelt den extremalen Punkt des konvexen Polygons |p| bezüglich des
+|extreme| ermittelt den extremalen Punkt des konvexen Polygons |p| bezï¿½glich des
 Richtungsvektors |u| (aus \cite[K. 7.3]{orourke94:cg}).
 
 \begin{code}
@@ -159,7 +160,7 @@ extremeArr p u n              = search 0 0
 %
 \subsubsection{Schnittpunkttests}
 
-Für konvexe Polygone ist der Test auf Enthaltensein einfach, zuerst die naive Methode, die
+Fï¿½r konvexe Polygone ist der Test auf Enthaltensein einfach, zuerst die naive Methode, die
 testet, ob sich der Punkt links von oder auf allen Kanten befindet.
 
 \begin{code}

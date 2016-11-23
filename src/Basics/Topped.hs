@@ -1,57 +1,62 @@
-%------------------------------------------------------------------------------
-% Copyright (C) 1997, 1998, 2008 Joern Dinkla, www.dinkla.net
-%------------------------------------------------------------------------------
-%
-% see
-%     Joern Dinkla, Geometrische Algorithmen in Haskell, Diploma Thesis,
-%     University of Bonn, Germany, 1998. 
-%
+{- |
+% (c) 1997, 1998, 2008, 2016 Joern Dinkla, www.dinkla.net
+
 \subsection{Erweiterung um maximales Element (|Topped|)}
 \module{Topped}
 
 a topped domain
 
-> module Basics.Topped where
-> 
-> import Prelude hiding (RealFloat (isInfinite))
-> 
-> data Topped a                 = Finite a | Infty 
->                                 deriving (Eq, Ord)
-> 
-> instance Show a => Show (Topped a) where
->     showsPrec _ Infty         = showString "oo"
->     showsPrec _ (Finite x)    = shows x
-> 
-> instance Functor Topped where
->     fmap f (Finite a)         = Finite (f a)
->     fmap f Infty              = Infty
-> 
-> instance Monad Topped where
->     Infty >>= k               = Infty
->     Finite x >>= k            = k x
->     return                    = Finite
-> 
-> caseTopped                    :: (a -> b) -> b -> Topped a -> b
-> caseTopped f i (Finite x)     = f x
-> caseTopped f i Infty          = i
-> 
-> fromTopped                    :: Topped a -> a
-> fromTopped (Finite x)         = x
-> fromTopped Infty              = error "Topped.fromTopped Infty"
-> 
-> isInfty, isFinite             :: Topped a -> Bool
-> isInfty                       = caseTopped (const False) True 
-> isFinite                      = caseTopped (const True) False 
-> 
->
-> instance Enum a => Enum (Topped a) where
->     toEnum i 		        = Finite (toEnum i)
->     fromEnum (Finite x)	= fromEnum x
->     fromEnum Infty		= error "Topped.fromEnum Infty"
->     enumFrom (Finite x)	= map Finite (enumFrom x)
->     enumFrom Infty		= []
->     enumFromThen (Finite x) (Finite y) = map Finite (enumFromThen x y)
->     enumFromThen _ _	        = []
+-}
+
+module Basics.Topped where
+
+import Prelude hiding (RealFloat (isInfinite))
+
+data Topped a                 = Finite a | Infty 
+                                deriving (Eq, Ord)
+
+instance Show a => Show (Topped a) where
+    showsPrec _ Infty         = showString "oo"
+    showsPrec _ (Finite x)    = shows x
+
+instance Functor Topped where
+    fmap f (Finite a)         = Finite (f a)
+    fmap f Infty              = Infty
+
+instance Applicative Topped where
+    pure x                    = Finite x
+    f <*> Infty               = Infty
+    Infty <*> (Finite x)      = Infty
+    (Finite f) <*> (Finite x) = Finite (f x)
+
+instance Monad Topped where
+    Infty >>= k               = Infty
+    Finite x >>= k            = k x
+    return                    = Finite
+
+caseTopped                    :: (a -> b) -> b -> Topped a -> b
+caseTopped f i (Finite x)     = f x
+caseTopped f i Infty          = i
+
+fromTopped                    :: Topped a -> a
+fromTopped (Finite x)         = x
+fromTopped Infty              = error "Topped.fromTopped Infty"
+
+isInfty, isFinite             :: Topped a -> Bool
+isInfty                       = caseTopped (const False) True 
+isFinite                      = caseTopped (const True) False 
+
+{-
+
+TODO this is old
+instance Enum a => Enum (Topped a) where
+    toEnum i 		        = Finite (toEnum i)
+    fromEnum (Finite x)	= fromEnum x
+    fromEnum Infty		= error "Topped.fromEnum Infty"
+    enumFrom (Finite x)	= map Finite (enumFrom x)
+    enumFrom Infty		= []
+    enumFromThen (Finite x) (Finite y) = map Finite (enumFromThen x y)
+    enumFromThen _ _	        = []
 
  instance Num a => Num (Topped a) where
    (Topped x) + (Topped y)     = Topped (x+y)
@@ -102,3 +107,4 @@ a topped domain
  instance RealFrac a => RealFrac (Topped a) where
      properFraction (Topped x) = let (a,b) = properFraction x in (a, Topped b)
      properFraction Infty      = error "Topped.properFraction Infty"
+-}

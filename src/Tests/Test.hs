@@ -8,6 +8,7 @@
 --
 module Tests.Test ( module Tests.Test, module Basics.Random ) where
 
+import Prelude hiding ((<*>))
 import Point   ( Point1 (..), Point2 (..), Point3 (..), Point4 (..), pointN,
 		 PointN (..), Point ((<*>)) )
 import Data.List    ( zip4 )

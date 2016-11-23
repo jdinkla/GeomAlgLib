@@ -1,31 +1,37 @@
 name:                GeomAlgLib
-version:             0.1.0.0
-synopsis:            Initial project template from stack
+version:             0.5.0.1
+synopsis:            A library of geometric algorithms for Haskell
 description:         Please see README.md
-homepage:            https://github.com/githubuser/GeomAlgLib#readme
-license:             BSD3
+homepage:            https://github.com/jdinkla/GeomAlgLib#readme
+license:             GPL-3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2016 Author name here
-category:            Web
+author:              Jörn Dinkla
+maintainer:          joern@dinkla.net
+copyright:           (c) 1997, 1998, 2008, 2016 by Jörn Dinkla, www.dinkla.net
+category:            Computational Geometry
 build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
 
 library
-  hs-source-dirs:      src
-  exposed-modules:     Lib
-  build-depends:       base >= 4.7 && < 5
-  default-language:    Haskell2010
-
-executable GeomAlgLib-exe
-  hs-source-dirs:      app
-  main-is:             Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  build-depends:       base
-                     , GeomAlgLib
-  default-language:    Haskell2010
+  build-depends:    base >= 4.7 && < 5, array, containers, base
+  GHC-Options:      -package ghc
+  hs-source-dirs:   src
+  default-language: Haskell2010
+  Exposed-modules:
+    Basics.DoubleEps, Basics.DynamicArray, Basics.ListCat,
+    Basics.OrderStat, Basics.QSort, Basics.Pretty, Basics.Random, Basics.STUtils, Basics.Sort, Basics.Sorting,
+    Basics.Topped, Basics.Utilities,
+    AdaptTriangulation, Assocs, ChansConvexHull, Circle, ConvexTriangulation,
+    Delaunay, DelaunayDAG, Divide, EventStructureSpec, GareysTriangulation,
+    GrahamsScan, JarvisMarch, KDTree, KETTriangulation, KirkpatrickSeidelHull,
+    Line, MergeHull, MergeTriangulation, MetaPost, MonotonePartition, MonotoneTriangulation,
+    NaiveTriangulation, Pertub, Point, Point1, Point2, Point3, Point4, PointClass, PointN,
+    Polar, Polygon, QEDS, QEDSbasics, QEDSstatic, RBox, RPG, RangeTree, SegmentIntersection,
+    StatusStructureSpec, Triangle, Voronoi,
+    Tests.Test, Tests.Polys,
+    Applications.AllNearest, Applications.ClosestPair, Applications.DelaunayHull, Applications.MaxEmptyCircle,
+    Applications.NearestPoint, Applications.OnionLayers
 
 test-suite GeomAlgLib-test
   type:                exitcode-stdio-1.0
@@ -38,4 +44,54 @@ test-suite GeomAlgLib-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/GeomAlgLib
+  location: https://github.com/jdinkla/GeomAlgLib
+
+Executable convexHulls
+    Main-Is: Tests/ConvexHulls.hs
+    hs-source-dirs: src
+    Other-Modules: GrahamsScan, JarvisMarch, MergeHull, KirkpatrickSeidelHull, ChansConvexHull
+    GHC-Options: -package ghc
+    default-language:    Haskell2010
+    build-depends:       base, array, GeomAlgLib
+
+Executable nearest
+    Main-Is: Tests/Nearest.hs
+    hs-source-dirs: src
+    Other-Modules: Applications.NearestPoint DelaunayDAG
+    GHC-Options: -package ghc
+    default-language:    Haskell2010
+    build-depends:       base, array, GeomAlgLib
+
+Executable rangeQueries
+    Main-Is: Tests/RangeQueries.hs
+    hs-source-dirs: src
+    Other-Modules: KDTree RangeTree
+    GHC-Options: -package ghc
+    default-language:    Haskell2010
+    build-depends:       base, array, GeomAlgLib
+
+Executable triangulations
+    Main-Is: Tests/Triangulations.hs
+    hs-source-dirs: src
+    Other-Modules: ConvexTriangulation, NaiveTriangulation, MonotoneTriangulation, GareysTriangulation,
+        KETTriangulation, AdaptTriangulation, MergeTriangulation
+    GHC-Options: -package ghc
+    default-language:    Haskell2010
+    build-depends:       base, array, containers, GeomAlgLib
+
+Executable voronoiDelaunay
+    Main-Is: Tests/VoronoiDelaunay.lhs
+    hs-source-dirs: src
+    Other-Modules: Delaunay Voronoi
+    GHC-Options: -package ghc
+    default-language:    Haskell2010
+    build-depends:       base, array, GeomAlgLib
+
+Executable glConvexHulls
+    Main-Is: OpenGL/GL_ConvexHulls.lhs
+    hs-source-dirs: src
+    Other-Modules: GrahamsScan, JarvisMarch, MergeHull, KirkpatrickSeidelHull, ChansConvexHull
+    Build-Depends:    base, array, GLUT
+    GHC-Options:  -package ghc
+    default-language:    Haskell2010
+    build-depends:       base, array, GeomAlgLib
