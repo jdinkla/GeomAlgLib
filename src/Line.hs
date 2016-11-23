@@ -11,7 +11,7 @@ module Line where
 
 import Prelude hiding ((<*>))
 import Point  ( Point ((<+>),(<*>)), Point3, xcoord, ycoord, zcoord, 
-		distance, sqrDistance )
+        distance, sqrDistance )
 import Point2 ( Point2 (..), P2, Orientation (..), orientation, angle2 )
 import Data.Maybe  ( isJust, fromJust )
 import qualified Point2 (translate, rotateOrg, reflect, rotate)
@@ -19,19 +19,19 @@ import qualified Point2 (translate, rotateOrg, reflect, rotate)
 
 
 data (Point p, Num a, Eq a) => Line p a 
-			      = Segment { point1, point2 :: p a }
+                  = Segment { point1, point2 :: p a }
                               | Ray     { point1, point2 :: p a }
                               | Line    { point1, point2 :: p a } 
 
-type Line2 a		      = Line Point2 a
-type L2	a		      = Line Point2 a
-type Line2D		      = Line2 Double
-type Line3 a		      = Line Point3 a
+type Line2 a              = Line Point2 a
+type L2    a              = Line Point2 a
+type Line2D              = Line2 Double
+type Line3 a              = Line Point3 a
 
 
 
 segmentToRay, segmentToLine, 
-    rayToLine		      :: (Point p, Num a, Eq a) => Line p a -> Line p a
+    rayToLine              :: (Point p, Num a, Eq a) => Line p a -> Line p a
 segmentToRay (Segment x y)    = Ray x y
 segmentToLine (Segment x y)   = Line x y
 rayToLine (Ray x y)           = Line x y
@@ -41,15 +41,15 @@ source (Segment a _)          = a
 target (Segment _ b)          = b
 
 mapLine                       :: (Point p, Num a, Num b, Eq a, Eq b) => (p a -> p b) -> Line p a -> Line p b
-mapLine f (Segment x y)	      = Segment (f x) (f y)
-mapLine f (Ray x y)	      = Ray (f x) (f y)
-mapLine f (Line x y)	      = Line (f x) (f y)
+mapLine f (Segment x y)          = Segment (f x) (f y)
+mapLine f (Ray x y)          = Ray (f x) (f y)
+mapLine f (Line x y)          = Line (f x) (f y)
 
 
 
 xcoord1, xcoord2, 
     ycoord1, ycoord2,
-    zcoord1, zcoord2	      :: (Point p, Num a, Eq a) => Line p a -> a
+    zcoord1, zcoord2          :: (Point p, Num a, Eq a) => Line p a -> a
 xcoord1                       = xcoord . point1
 ycoord1                       = ycoord . point1
 zcoord1                       = zcoord . point1
@@ -79,11 +79,11 @@ vertical x                    = Line (Point2 (x, 0)) (Point2 (x,1))
 
 
 data Fractional a => Slope a  = Vertical | Slope a 
-				deriving (Eq, Show)
+                deriving (Eq, Show)
 
 slope                         :: (Fractional a, Eq a) => L2 a -> Slope a
-slope s | dx' == 0	      = Vertical 
-	| otherwise	      = Slope (dy s / dx')
+slope s | dx' == 0          = Vertical 
+    | otherwise          = Slope (dy s / dx')
   where dx'                   = dx s
 
 areParallel                   :: (Fractional a, Eq a) => L2 a -> L2 a -> Bool
@@ -95,7 +95,7 @@ areParallel s t               = slope s == slope t
 
 direction                     :: RealFloat a => L2 a -> a
 direction s | a/=0 || b/=0    = atan2 b a
-	    | otherwise	      = 0
+        | otherwise          = 0
   where a                     = dx s
         b                     = dy s    
 
@@ -103,8 +103,8 @@ direction s | a/=0 || b/=0    = atan2 b a
 -- |angle| ermittelt den Winkel zwischen zwei Linien.
 
 
-angle			      :: Line2D -> Line2D -> Double
-angle s t		      = angle2 (point2 s - point1 s) (point2 t - point1 t)
+angle                  :: Line2D -> Line2D -> Double
+angle s t              = angle2 (point2 s - point1 s) (point2 t - point1 t)
 
 
 -- |translate|, |rotate| und |reflect| sind kanonische Erweiterungen der
@@ -128,8 +128,8 @@ reflect s p q                 = mapLine (\ x -> Point2.reflect x p q) s
 
 
 fromPDL                       :: (Floating a, Ord a) => (P2 a -> P2 a -> b) -> P2 a -> a -> a -> b
-fromPDL c p phi d	      = c p (p + (oriented phi d))
-  where oriented phi d	      = Point2.rotateOrg (Point2 (d, 0)) phi
+fromPDL c p phi d          = c p (p + (oriented phi d))
+  where oriented phi d          = Point2.rotateOrg (Point2 (d, 0)) phi
 
 {-
 
@@ -186,8 +186,8 @@ strictIntersect               = interAux paramOk
     paramOk (Line _ _) r      = True
 doStrictIntersect s t         = isJust (strictIntersect s t)
 
-interAux 		      :: (Fractional a, Eq a) => (Line2 a -> a -> Bool) -> Line2 a 
-			      -> Line2 a -> Maybe (Point2 a)
+interAux               :: (Fractional a, Eq a) => (Line2 a -> a -> Bool) -> Line2 a 
+                  -> Line2 a -> Maybe (Point2 a)
 interAux ok s1 s2             = if isJust res && ok s1 r && ok s2 s then Just i else Nothing
   where
   res                         = intersection s1 s2
@@ -195,25 +195,26 @@ interAux ok s1 s2             = if isJust res && ok s1 r && ok s2 s then Just i 
   
 intersection                 :: (Fractional a, Eq a) => L2 a -> L2 a -> Maybe (Point2 a,a,a)
 intersection s1 s2
-  | denom == 0	              = Nothing
-  | otherwise		      = Just (i, r, s)
-  where a 		      = point1 s1
-	b		      = point2 s1
-	c		      = point1 s2
-	d		      = point2 s2
-        xa		      = xcoord a
-	ya		      = ycoord a
-	xb		      = xcoord b
-	yb		      = ycoord b
-        xc		      = xcoord c
-	yc		      = ycoord c
-	xd		      = xcoord d
-	yd		      = ycoord d
-        denom		      = (xb-xa)*(yd-yc)-(yb-ya)*(xd-xc)
-        r		      = ((ya-yc)*(xd-xc)-(xa-xc)*(yd-yc)) / denom
-        s		      = ((ya-yc)*(xb-xa)-(xa-xc)*(yb-ya)) / denom
---        i		      = Point2 (xa + r*(xb-xa), ya + r*(yb-ya))
-        i                     = a + (r <*> (b - a))
+  | denom == 0                  = Nothing
+  | otherwise              = Just (i, r, s)
+  where 
+    a               = point1 s1
+    b              = point2 s1
+    c              = point1 s2
+    d              = point2 s2
+    xa              = xcoord a
+    ya              = ycoord a
+    xb              = xcoord b
+    yb              = ycoord b
+    xc              = xcoord c
+    yc              = ycoord c
+    xd              = xcoord d
+    yd              = ycoord d
+    denom              = (xb-xa)*(yd-yc)-(yb-ya)*(xd-xc)
+    r              = ((ya-yc)*(xd-xc)-(xa-xc)*(yd-yc)) / denom
+    s              = ((ya-yc)*(xb-xa)-(xa-xc)*(yb-ya)) / denom
+--        i              = Point2 (xa + r*(xb-xa), ya + r*(yb-ya))
+    i                     = a + (r <*> (b - a))
 
 {-
 \cite[1.02]{cga-faq}
@@ -221,7 +222,7 @@ intersection s1 s2
 
 
 distanceFromLine              :: (Ord a, Floating a) => L2 a -> P2 a -> a
-distanceFromLine l c	      = sqrt (sqrDistanceFromLine l c)
+distanceFromLine l c          = sqrt (sqrDistanceFromLine l c)
 
 sqrDistanceFromLine           :: (Ord a, Fractional a) => L2 a -> P2 a -> a
 sqrDistanceFromLine (Line a b) c = abs (s*s*l2) 
@@ -236,14 +237,15 @@ sqrDistanceFromLine (Segment a b) c
   | 0<=r && r<=1              = abs (s*s*l2)
   where (r,s,l2,_)            = distanceAux a b c
 
-distanceAux		      :: (Fractional a, Eq a) => P2 a -> P2 a -> P2 a -> (a,a,a,P2 a)
+distanceAux              :: (Fractional a, Eq a) => P2 a -> P2 a -> P2 a -> (a,a,a,P2 a)
 distanceAux a@(Point2 (xa,ya)) b@(Point2 (xb,yb)) c@(Point2 (xc,yc))
                               = (r, s, l2, i)
-  where l2                    = sqrLengthOfSegment (Segment a b)
-        r                     = ((ya-yc)*(ya-yb)-(xa-xc)*(xb-xa)) / l2
-        s                     = ((ya-yc)*(xb-xa)-(xa-xc)*(yb-ya)) / l2
+  where 
+    l2                    = sqrLengthOfSegment (Segment a b)        
+    r                     = ((ya-yc)*(ya-yb)-(xa-xc)*(xb-xa)) / l2
+    s                     = ((ya-yc)*(xb-xa)-(xa-xc)*(yb-ya)) / l2
 --        i                     = Point2 (xa + r*(xb-xa), ya + r*(yb-ya))
-	i		      = a + (r <*> (b - a))
+    i              = a + (r <*> (b - a))
 
 
 

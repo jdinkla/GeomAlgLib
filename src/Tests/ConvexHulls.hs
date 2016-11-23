@@ -40,20 +40,20 @@ main = do args <- getArgs
           (_, _, ps) <- readPoints2 f
           putStrLn (figure 1 (points s ps))
           out 2 s l  ({-# SCC "graham"    #-} (graham ps))
-          out 3 s l  ({-# SCC "graham3"	#-} (graham3 ps))
-          out 4 s l  ({-# SCC "jarvis"	#-} (jarvis ps))
+          out 3 s l  ({-# SCC "graham3"    #-} (graham3 ps))
+          out 4 s l  ({-# SCC "jarvis"    #-} (jarvis ps))
           out 5 s l  ({-# SCC "jarvisint" #-} (jarvisInt ps))
           out 6 s l  ({-# SCC "mergehull" #-} (mergeHull ps))
-          out 7 s l  ({-# SCC "bumerge"	#-} (bottomupMergeHull ps))
-          out 8 s l  ({-# SCC "kshull"	#-} (ksHull ps))
-          out 9 s l  ({-# SCC "kshull2"	#-} (ksHullX (median.filt) (median.filt) ps))
-          out 10 s l ({-# SCC "chan"	    #-} (chan ps))
+          out 7 s l  ({-# SCC "bumerge"    #-} (bottomupMergeHull ps))
+          out 8 s l  ({-# SCC "kshull"    #-} (ksHull ps))
+          out 9 s l  ({-# SCC "kshull2"    #-} (ksHullX (median.filt) (median.filt) ps))
+          out 10 s l ({-# SCC "chan"        #-} (chan ps))
           putStrLn "\n end"
 
 out :: MetaPost a => Int -> Double -> [Alg] -> a -> IO ()
 out n s l p
   | algo n `elem` l = putStrLn (figure n (convexhull s p))
-  | otherwise	      = putStrLn (figure n "draw (0,0) withcolor white;\n")
+  | otherwise          = putStrLn (figure n "draw (0,0) withcolor white;\n")
 
 points sc ps
   = "%points\n" ++ "picture p;\n" ++ pen 1 ++ showMP [Scaled sc] ps ++ "p := currentpicture;\n"
@@ -70,15 +70,9 @@ filt xs
   | xs `longerThan` 10 = tk 1 xs
   | otherwise          = xs
   where
-  tk i []     = []
-  tk i [x]    = []
-  tk i (x:y:xs) = x : y : tk (2*i) (skip i xs)
-  skip 0 xs	= xs
-  skip k []	= []
-  skip k (x:xs) = skip (k-1) xs
-
-
-
-
-
-
+    tk i []     = []
+    tk i [x]    = []
+    tk i (x:y:xs) = x : y : tk (2*i) (skip i xs)
+    skip 0 xs    = xs
+    skip k []    = []
+    skip k (x:xs) = skip (k-1) xs

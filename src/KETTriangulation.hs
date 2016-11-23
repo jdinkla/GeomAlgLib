@@ -15,27 +15,28 @@ import Polygon   ( Polygon2, angles, vertices )
 import Triangle  ( Triangle (..), Triangle2, containsBNV )
 import Data.List      ( (\\) )
 
-ketTri                        :: (Ord a, Num a) => Polygon2 a -> [Triangle2 a]
-ketTri poly		      = scan vs stack rs
-  where ps@(p1:p2:p3:qs)      = vertices poly
-        vs                    = qs ++ [p1]
-        stack                 = [p3, p2, p1, last ps]
-        rs                    = reflexVertices ps
+ketTri :: (Ord a, Num a) => Polygon2 a -> [Triangle2 a]
+ketTri poly              = scan vs stack rs
+  where 
+    ps@(p1:p2:p3:qs)      = vertices poly
+    vs                    = qs ++ [p1]
+    stack                 = [p3, p2, p1, last ps]
+    rs                    = reflexVertices ps
 
-scan	                      :: (Ord a, Num a) => [P2 a] -> [P2 a] -> [P2 a]
-			      -> [Triangle2 a]
+scan :: (Ord a, Num a) => [P2 a] -> [P2 a] -> [P2 a] -> [Triangle2 a]
 scan [v] [x_p, x_i, _, _] _  = [Triangle (x_i, x_p, v)]
 scan (v:vs) ss@[_,_,_] rs     = scan vs (v:ss) rs
 scan vs@(v:vs') ss@(x_p:x_i:ss'@(x_m:x_mm:_)) rs
   | isEar rs x_m x_i x_p      = Triangle (x_m, x_i, x_p) : scan vs (x_p:ss') rs'
   | otherwise                 = scan vs' (v:ss) rs
-  where rs'		      = rs \\ (isConvex x_m x_p v ++ isConvex x_mm x_m x_p)
-	isConvex im i ip      = if isLeftTurn im i ip then [i] else []
+  where 
+    rs'              = rs \\ (isConvex x_m x_p v ++ isConvex x_mm x_m x_p)
+    isConvex im i ip      = if isLeftTurn im i ip then [i] else []
 scan _ _ _ = []
 
 isEar                         :: (Ord a, Num a) => [P2 a] -> P2 a -> P2 a -> P2 a -> Bool
 isEar [] _ _ _                = True
-isEar rs m x p		      = isLeftTurn m x p
+isEar rs m x p              = isLeftTurn m x p
                                 && not (any ((Triangle (m,x,p)) `containsBNV`) rs)
 
 reflexVertices                :: (Ord a, Num a) => [P2 a] -> [P2 a]

@@ -27,10 +27,10 @@ instance (Num a, Show a)   => Show (Point1 a) where
     showsPrec _ (Point1 x) = shows x
 
 instance Point Point1 where
-    dimension _		           = 1
-    origin		               = Point1 0
-    ith 1 (Point1 x)	       = x
-    ith _ _		               = error "Point1: ith > 1"
+    dimension _                   = 1
+    origin                       = Point1 0
+    ith 1 (Point1 x)           = x
+    ith _ _                       = error "Point1: ith > 1"
     mapP f (Point1 x)          = Point1 (f x)
     (Point1 x) <==> (Point1 y) = x == y
     (Point1 x) <+> (Point1 y)  = Point1 (x+y)
@@ -38,10 +38,10 @@ instance Point Point1 where
     (Point1 x) <.> (Point1 y)  = x*y
 
 instance (Num a, Eq a) => Num (Point1 a) where
-    (+)	                    = (<+>)
-    (-)			            = (<->)
-    negate		            = negateP
+    (+)                        = (<+>)
+    (-)                        = (<->)
+    negate                    = negateP
     (Point1 x) * (Point1 y) = Point1 (x*y)
-    abs	(Point1 x)	        = Point1 (abs x)
-    signum		            = undefined
-    fromInteger 	        = Point1 . fromInteger
+    abs    (Point1 x)            = Point1 (abs x)
+    signum                    = undefined
+    fromInteger             = Point1 . fromInteger

@@ -86,7 +86,7 @@ Executable triangulations
     build-depends:       base, array, containers, GeomAlgLib
 
 Executable voronoiDelaunay
-    Main-Is: Tests/VoronoiDelaunay.lhs
+    Main-Is: Tests/VoronoiDelaunay.hs
     hs-source-dirs: src
     Other-Modules: Delaunay Voronoi
     GHC-Options: -package ghc
@@ -94,7 +94,7 @@ Executable voronoiDelaunay
     build-depends:       base, array, GeomAlgLib
 
 Executable glConvexHulls
-    Main-Is: OpenGL/GL_ConvexHulls.lhs
+    Main-Is: OpenGL/GL_ConvexHulls.hs
     hs-source-dirs: src
     Other-Modules: GrahamsScan, JarvisMarch, MergeHull, KirkpatrickSeidelHull, ChansConvexHull
     Build-Depends:    base, array, GLUT

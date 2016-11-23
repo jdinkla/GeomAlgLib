@@ -21,7 +21,7 @@ Vierdimensionale Punkte \Index{Point4} sind noch als Tupel implementiert.
 
 newtype Num a => Point4 a     = Point4 (a,a,a,a) deriving Eq
 
-type P4	a		      = Point4 a
+type P4    a              = Point4 a
 
 instance (Num a, Show a) => Show (Point4 a) where
     showsPrec _ (Point4 (x,y,z,u)) = shows (x,y,z,u)
@@ -46,10 +46,10 @@ instance Point Point4 where
                               = x*x' + y*y' + z*z' + u*u'
 
 instance (Num a, Eq a)        => Num (Point4 a) where
-    (+)			      = (<+>)
-    (-)			      = (<->)
-    negate		      = negateP
-    (*)			      = undefined
-    abs			      = mapP abs
-    signum		      = undefined
-    fromInteger		      = undefined
+    (+)                  = (<+>)
+    (-)                  = (<->)
+    negate              = negateP
+    (*)                  = undefined
+    abs                  = mapP abs
+    signum              = undefined
+    fromInteger              = undefined

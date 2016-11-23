@@ -15,15 +15,15 @@ import GareysTriangulation   ( garey )
 import KETTriangulation      ( ketTri )
 import AdaptTriangulation    ( adaptTri )
 import MergeTriangulation    ( mergeTri )
-import Point2		       ( Point2 (..), rotateOrg )
-import Polygon	       ( Polygon, vertices, mapPolygon )
-import RPG		       ( readPolygon )
+import Point2               ( Point2 (..), rotateOrg )
+import Polygon           ( Polygon, vertices, mapPolygon )
+import RPG               ( readPolygon )
 import System.Environment ( getArgs )
 import System.Exit           ( ExitCode (ExitFailure), exitWith )
 import Data.Maybe            ( fromJust )
 import MetaPost
-import Triangle	       ( Triangle2 )
-import Polygon	       ( Polygon2 )
+import Triangle           ( Triangle2 )
+import Polygon           ( Polygon2 )
 
 --import Polygon (Polygon (..))
 --import Point2 (Point (..))
@@ -60,13 +60,13 @@ main = do
     -- '>>' aren't there so...
     (out 7 sc l $ {-# SCC "adaptTri" #-} adaptTri p) >>
         (out 8 sc l $ {-# SCC "convexTri" #-} convexTri p) >>
-	    (out 9 sc l $ {-# SCC "mergeTri"  #-} mergeTri $ vertices p)
+        (out 9 sc l $ {-# SCC "mergeTri"  #-} mergeTri $ vertices p)
     putStrLn "\n end"
 
 out :: (Show a, RealFloat a) => Int -> Double -> [Alg] -> [Triangle2 a] -> IO ()
 out n sc l ts
   | (algo n) `elem` l = putStrLn (figure n ("draw p;\n" ++ triangles sc ts (triangles2 sc ts "")))
-  | otherwise	        = putStrLn (figure n "draw (0,0) withcolor white;\n")
+  | otherwise            = putStrLn (figure n "draw (0,0) withcolor white;\n")
 
 trans :: (Ord a, Floating a) => Point2 a -> Point2 a
 trans p = rotateOrg p (-pi/2)
@@ -92,6 +92,6 @@ triangles2 sc ts cs
 
 {-
  numVerts poly = mapM_ (\ (i,p) -> putStrLn ("label(\"" ++ show i ++ "\","
-				            ++ show p ++ " scaled 10cm);"))
+                            ++ show p ++ " scaled 10cm);"))
                        (zip [0..] (vertices poly))
 -}
