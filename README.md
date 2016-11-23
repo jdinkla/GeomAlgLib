@@ -1,6 +1,6 @@
 # GeomAlgLib
 
-This project containts algorithms and datastructures for geometric algorithsm.
+This project containts algorithms and datastructures for some geometric problems.
 
 The code was written in 1998 for a 
 [diploma thesis](https://jdinkla.github.io/software-development/1998/10/19/geometric-algorithms-in-haskell.html).
@@ -9,9 +9,9 @@ In 2016 it was adapted to build with [stack](https://docs.haskellstack.org).
 
 The library contains:
 
-- basic datastructures for points, lines, segments, rays, polygons and simple functions like calculations of angles, area, etc.
+- datastructures for points, lines, segments, rays, polygons and functions like calculations of angles, area, etc.
 - datastructures for efficient orthogonal range queries: kd-trees and rangetrees
-- algorithms for twodimensional convex hulls: Jarvis March, Grahams Scan, Merge-Hull, the algorithm of Kirkpatrick and Seidel and Chan's algorithmus
+- algorithms for two dimensional convex hulls: Jarvis March, Grahams Scan, Merge-Hull, the algorithm of Kirkpatrick and Seidel and Chan's algorithmus
 - algorithms for the triangulation of simple polygons: two simple but inefficient algorithms, the "standard"-algorithm of Garey, Johnson, Preparata and Tarjan and two output-sensitive algorithms of Toussaint
 - the quad-edge data structure (QEDS) for planar subdivisions and polyhedra
 - algorithms for Delaunay-triangulations and Voronoi-diagrams in two dimensions: the divide & conquer-algorithms of Stolfi and Guibas, which uses the QEDS and a randomised incremental algorithms by Boissonnat and Teillaud, which uses the delaunay-dag.
